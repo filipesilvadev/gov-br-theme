@@ -1,4 +1,5 @@
 <?php
+  // add_theme_support( 'post-formats', array( 'link' ) );
 
   add_action('after_setup_theme', 'gov_br_theme'); 
   function gov_br_theme(){
@@ -47,3 +48,26 @@
       'after_widget' => '</div>'
     ));
   }
+
+  //Enqueue the Dashicons script
+add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
+
+
+  function institutional(){
+    register_post_type('institutional',
+      array(
+        'labels' => array(
+          'name' => 'Institucionais',
+          'singular_name' => 'Institucional'
+        ),
+        'public' => true,
+        'supports' => array('title', 'thumbnail','excerpt'),
+        'menu_icon' => 'dashicons-editor-table'
+      ),
+    );
+    function load_dashicons_front_end() {
+      wp_enqueue_style( 'dashicons' );
+      }
+  }
+
+  add_action('init', 'institutional');

@@ -408,3 +408,18 @@ input.search-field::placeholder {
 .widBanner2{
   margin-bottom: 70px;
 }
+
+.institutional{
+  text-align: center;
+  line-height: 1.5em;
+  background: #F8F8F8;
+  padding: 70px 0 50px;
+}
+
+.institutional h2{
+  color: #0c326f;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin-bottom: 15px;
+}

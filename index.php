@@ -61,7 +61,6 @@
 
   <?php 
    $query2 = new WP_Query( array(
-    //  'category_name' => 'news',
       'posts_per_page' => 6,
       'offset' => 1
    )); 
@@ -106,7 +105,6 @@
 
 <?php 
 $query3 = new WP_Query( array(
- //  'category_name' => 'news',
    'posts_per_page' => 5,
    'offset' => 7
 )); 
@@ -147,5 +145,37 @@ $query3 = new WP_Query( array(
 <div class="gov-wrapper flex-center widBanner2">
     <?php dynamic_sidebar('second');?>
   </div>
+
+<section class="institutional">
+  <div class="gov-wrapper">
+    <h2>Institucional</h2>
+    <p class="release">
+      O Ministério da Agricultura e Pecuária (Mapa) é responsável pela gestão das políticas públicas de estímulo à agropecuária, pelo fomento do agronegócio e pela regulação e normatização de serviços vinculados ao setor. No Brasil, o agronegócio contempla o pequeno, o médio e o grande produtor rural e reúne atividades de fornecimento de bens e serviços à agricultura, produção agropecuária, processamento, transformação e distribuição de produtos de origem agropecuária até o consumidor final.
+    </p>
+    <?php
+      // extract($args);
+      $args = array(
+        'post_type' => 'institutional',
+        'posts_per_page' => -1,
+        'order' => 'ASC'
+      );
+      $inst_query = new WP_Query($args);
+
+      if($inst_query->have_posts()) :
+        while($inst_query->have_posts()) :
+          $inst_query->the_post();
+          $attachment_id = get_post_thumbnail_id();
+    ?>
+    <a href="<?php echo get_the_excerpt(); ?>" class="inst-card" target="_blank">
+      <img src="<?php echo wp_get_attachment_image_src($attachment_id)[0]; ?>" alt="" class="inst-icon">
+      <h3 class="title"><?php the_title(); ?></h3>
+    </a>
+    <?php
+      endwhile;
+    endif;
+    ?>
+  </div>
+  <?php wp_reset_postdata(); ?>
+</section>
 
 <?php get_footer();
