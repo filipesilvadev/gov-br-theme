@@ -1,16 +1,20 @@
 <?php get_header(); ?>
 
   <section class="shortcuts">
-    <button class="see-more"><i class="fa-solid fa-fire-flame-curved"></i> Serviços mais acessados do <?php bloginfo('name');?></button>
-    <button class="see-more"><i class="fa-solid fa-star"></i> Serviços em destaque do <?php bloginfo('name');?></button>
-    <section class="shortcuts-wrapper closed">
-      <div class="more-access">
-        <?php wp_nav_menu(array('theme_location' => 'fourth')); ?>
+    <div class="gov-wrapper">
+      <div class="sm-buttons-wrapper">
+        <button class="see-more"><i class="fa-solid fa-fire-flame-curved"></i> Serviços mais acessados do <?php bloginfo('name');?></button>
+        <button class="see-more"><i class="fa-solid fa-star"></i> Serviços em destaque do <?php bloginfo('name');?></button>
       </div>
-      <div class="top-rated">
-        <?php wp_nav_menu(array('theme_location' => 'fifth')); ?>
-      </div>
-    </section>
+      <section class="shortcuts-wrapper">
+        <div class="more-access">
+          <?php wp_nav_menu(array('theme_location' => 'fourth')); ?>
+        </div>
+        <div class="top-rated">
+          <?php wp_nav_menu(array('theme_location' => 'fifth')); ?>
+        </div>
+      </section>
+    </div>
   </section>
 
   <section class="row-social-media">
@@ -32,24 +36,116 @@
 
 
 
-  <!-- Loop de Posts -->
-  <?php
-    if (have_posts()) :
-      while (have_posts()) : 
-        the_post();
-    ?>
-      <h3><?php the_title();?></h3>
-      <div>
-        <?php the_content();?>
-      </div>
-    <?php
-      endwhile;
-    else:
-      ?>
-        <h3>Sem publicações no momento.</h3>
-      <?php
-    endif;
-  ?>
-<?php dynamic_sidebar('primary');?>
+
+<?php 
+   $query1 = new WP_Query( array(
+    //  'category_name' => 'news',
+      'posts_per_page' => 1,
+   )); 
+?>
+  <?php if ( $query1->have_posts() ) : ?>
+    <?php while ( $query1->have_posts() ) : $query1->the_post(); ?>
+      
+      <a id="featured-post" class="bg-overlay" href="<?php echo get_permalink(get_the_ID());?>" style="background-image:url('<?php echo get_the_post_thumbnail_url( get_the_ID(), 'large' );?>')">
+        <h3 class="title"><?php the_title(); ?></h3>
+        <h4 class="excerpt"><?php the_excerpt();?></h4>
+      </a>
+
+    <?php endwhile; ?>
+    <?php wp_reset_postdata(); ?>
+
+  <?php else : ?>
+    <p><?php __('No News'); ?></p>
+  <?php endif; ?>
+
+
+  <?php 
+   $query2 = new WP_Query( array(
+    //  'category_name' => 'news',
+      'posts_per_page' => 6,
+      'offset' => 1
+   )); 
+?>
+<section class="second-grid-post gov-wrapper">
+  <?php if ( $query2->have_posts() ) : ?>
+    <?php while ( $query2->have_posts() ) : $query2->the_post(); ?>
+      
+      <a class="grid-post bg-overlay" href="<?php echo get_permalink(get_the_ID());?>" style="background-image:url('<?php echo get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );?>')">
+      <p class="category-post">
+          <?php
+            $categories = get_the_category();
+
+            if ( ! empty( $categories ) ) {
+              echo esc_html( $categories[0]->name );	
+            }
+          ?>
+        </p>
+        <h3 class="title"><?php the_title(); ?></h3>
+        <p class="date-post">
+          <?php
+          $post_date = get_the_date( 'j/m/Y G\hi' ); echo $post_date;
+          ?>
+        </p>
+      </a>
+
+    <?php endwhile; ?>
+    <?php wp_reset_postdata(); ?>
+
+  <?php else : ?>
+    <p><?php __('No News'); ?></p>
+  <?php endif; ?>
+</section>
+
+
+
+  <div class="gov-wrapper flex-center widBanner1">
+    <?php dynamic_sidebar('primary');?>
+  </div>
+
+
+
+<?php 
+$query3 = new WP_Query( array(
+ //  'category_name' => 'news',
+   'posts_per_page' => 5,
+   'offset' => 7
+)); 
+?>
+<section class="third-grid-post gov-wrapper">
+<?php if ( $query3->have_posts() ) : ?>
+ <?php while ( $query3->have_posts() ) : $query3->the_post(); ?>
+   
+   <a class="grid-post" href="<?php echo get_permalink(get_the_ID());?>">
+   <p class="category-post">
+          <?php
+            $categories = get_the_category();
+
+            if ( ! empty( $categories ) ) {
+              echo esc_html( $categories[0]->name );	
+            }
+          ?>
+        </p>
+     <h3 class="title"><?php the_title(); ?></h3>
+     <p class="date-post">
+        <?php
+        $post_date = get_the_date( 'j/m/Y G\hi' ); echo $post_date;
+        ?>
+      </p>
+   </a>
+
+ <?php endwhile; ?>
+ <?php wp_reset_postdata(); ?>
+
+<?php else : ?>
+ <p><?php __('No News'); ?></p>
+<?php endif; ?>
+<div href="#" class="grid-post">
+  <a href="#" class="btn">Últimas Notícias</a>  
+</div>
+</section>
+
+<div class="gov-wrapper flex-center widBanner2">
+    <?php dynamic_sidebar('second');?>
+  </div>
 
 <?php get_footer();

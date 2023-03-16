@@ -17,13 +17,19 @@
     );
   }
 
+// Custom Image Size and Crops
+  $squareThumb = "512-512";
+  $width = 512;
+  $height = 512;
+  $crop = true;
+
+  add_image_size($squareThumb, $width, $height, $crop);
+
 
   add_action('wp_enqueue_scripts', 'gov_br_scripts');
   function gov_br_scripts(){
     wp_enqueue_style('reset-style', get_template_directory_uri() . '/assets/css/reset.css');
     wp_enqueue_style('gov-br-style', get_template_directory_uri() . '/assets/css/gov-br.css');
-
-    wp_enqueue_script('gov-br-script', get_template_directory_uri() . '/assets/js/govbr-scripts.js');
   }
 
   add_action('widgets_init', 'gov_br_widgets');
@@ -31,6 +37,12 @@
     register_sidebar(array(
       'id' => 'primary',
       'name' => 'Primeiro Banner',
+      'before_widget' => '<div id="%1$s" class="banner %2$s">',
+      'after_widget' => '</div>'
+    ));
+    register_sidebar(array(
+      'id' => 'second',
+      'name' => 'Segundo Banner',
       'before_widget' => '<div id="%1$s" class="banner %2$s">',
       'after_widget' => '</div>'
     ));
