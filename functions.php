@@ -11,7 +11,6 @@
       array(
         'primary' => 'Menu Principal',
         'secondary' => 'Menu Geral',
-        'tertiary' => 'Gov.br',
         'fourth' => 'Mais Acessados',
         'fifth' => 'Em Destaque'
       )
@@ -47,11 +46,13 @@
       'before_widget' => '<div id="%1$s" class="banner %2$s">',
       'after_widget' => '</div>'
     ));
+    register_sidebar(array(
+      'id' => 'inst_1',
+      'name' => 'Texto do Institucional',
+      'before_widget' => '<div id="%1$s" class="inst_txt %2$s">',
+      'after_widget' => '</div>'
+    ));
   }
-
-  //Enqueue the Dashicons script
-add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
-
 
   function institutional(){
     register_post_type('institutional',
@@ -65,9 +66,20 @@ add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
         'menu_icon' => 'dashicons-editor-table'
       ),
     );
-    function load_dashicons_front_end() {
-      wp_enqueue_style( 'dashicons' );
-      }
   }
-
   add_action('init', 'institutional');
+
+  function channels(){
+    register_post_type('channels',
+      array(
+        'labels' => array(
+          'name' => 'Canais',
+          'singular_name' => 'Canal'
+        ),
+        'public' => true,
+        'supports' => array('title', 'thumbnail','excerpt'),
+        'menu_icon' => 'dashicons-format-chat'
+      ),
+    );
+  }
+  add_action('init', 'channels');

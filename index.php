@@ -149,9 +149,8 @@ $query3 = new WP_Query( array(
 <section class="institutional">
   <div class="gov-wrapper">
     <h2>Institucional</h2>
-    <p class="release">
-      O Ministério da Agricultura e Pecuária (Mapa) é responsável pela gestão das políticas públicas de estímulo à agropecuária, pelo fomento do agronegócio e pela regulação e normatização de serviços vinculados ao setor. No Brasil, o agronegócio contempla o pequeno, o médio e o grande produtor rural e reúne atividades de fornecimento de bens e serviços à agricultura, produção agropecuária, processamento, transformação e distribuição de produtos de origem agropecuária até o consumidor final.
-    </p>
+    <?php dynamic_sidebar('inst_1');?>
+    <div class="cards">
     <?php
       // extract($args);
       $args = array(
@@ -174,8 +173,43 @@ $query3 = new WP_Query( array(
       endwhile;
     endif;
     ?>
+    </div>
   </div>
   <?php wp_reset_postdata(); ?>
 </section>
 
-<?php get_footer();
+<section class="channels">
+  <div class="gov-wrapper">
+    <h2>Canais de Atendimento</h2>
+    <h3 class="subtitle">Você pode fazer mais manifestações nos seguintes canais</h3>
+    <div class="cards">
+    <?php
+      // extract($args);
+      $args = array(
+        'post_type' => 'channels',
+        'posts_per_page' => -1,
+        'order' => 'ASC'
+      );
+      $channels_query = new WP_Query($args);
+
+      if($channels_query->have_posts()) :
+        while($channels_query->have_posts()) :
+          $channels_query->the_post();
+          $attachment_id = get_post_thumbnail_id();
+    ?>
+    <a href="<?php echo get_the_excerpt(); ?>" class="chanel-card" target="_blank">
+      <img src="<?php echo wp_get_attachment_image_src($attachment_id)[0]; ?>" alt="" class="icon">
+      <h3 class="title"><?php the_title(); ?></h3>
+    </a>
+    <?php
+      endwhile;
+    endif;
+    ?>
+    </div>
+  </div>
+</section>
+<section class="main-footer">
+  <div class="gov-wrapper">
+    <?php get_footer(); ?>
+  </div>
+</section>

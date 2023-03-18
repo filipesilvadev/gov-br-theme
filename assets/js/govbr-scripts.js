@@ -18,3 +18,28 @@ for (let i = 0; i < sMenuTrigger.length; i++) {
   });  
 
 }
+
+let topMenu = document.querySelector('.menu-menu-container');
+const topTrigger = document.querySelector('.main-menu .trigger');
+
+topTrigger.addEventListener('click', ()=>{
+  topMenu.classList.toggle('active');
+});
+
+
+let searchContainer = document.querySelector('.col2-search');
+let sTrigger = document.querySelector('.sTrigger');
+let siteDescription = document.querySelector('a.description');
+
+// gMenuTrigger
+
+sTrigger.addEventListener('click', ()=>{
+  searchContainer.classList.toggle('active');
+  if(searchContainer.classList.contains('active')){
+    siteDescription.style.opacity = '0';
+  }else{
+    siteDescription.style.opacity = '1';
+  }
+});
+
+

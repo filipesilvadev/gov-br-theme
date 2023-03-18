@@ -24,6 +24,7 @@
   <div class="menu-wrapper">
     <div class="navigations">
         <div class="main-menu">
+          <span class="trigger"></span>
           <?php wp_nav_menu(array('theme_location' => 'primary')); ?>
         </div>
       </div>
@@ -44,6 +45,7 @@
     <form role="search" method="get" class="search-form" action="<?php echo home_url( '/' ); ?>">
       <input type="search" class="search-field" placeholder="<?php echo esc_attr_x( 'O que você procura?', 'placeholder' ) ?>" value="<?php echo get_search_query() ?>" name="s" title="<?php echo esc_attr_x( 'Search for:', 'label' ) ?>" />
       <input type="submit" class="search-submit" value="<?php echo esc_attr_x( 's', 'submit button' ) ?>" />
+      <span class="sTrigger"></span>
     </form>
   </div>
 </section>
@@ -52,8 +54,6 @@
   <div class="gov-wrapper">
     <nav class="nav-gov-categories">
         <?php wp_nav_menu(array('theme_location' => 'secondary')); ?>
-        <hr>
-        <?php wp_nav_menu(array('theme_location' => 'tertiary')); ?>
     </nav>  
   </div>
 </section>
